@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <EditText
+        android:id="@+id/editTextmaillogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="mail"
+        android:gravity="center"
+        android:layout_marginTop="80dp" />
+
+    <EditText
+        android:id="@+id/editTextpseudologin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="name"
+        android:gravity="center"
+        android:layout_marginTop="120dp" />
+
+    <Button
+        android:id="@+id/buttonaddmailtobddlogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="logintobdd"
+        android:text="Login"
+        android:layout_marginTop="160dp"/>
+
+</RelativeLayout>
