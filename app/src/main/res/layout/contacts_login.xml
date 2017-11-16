@@ -22,11 +22,22 @@
         android:layout_marginTop="120dp" />
 
     <Button
-        android:id="@+id/buttonaddmailtobddlogin"
+        android:id="@+id/buttoncheckmailtobddlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="logintobdd"
+        android:clickable="true"
         android:text="Login"
         android:layout_marginTop="160dp"/>
+
+    <TextView
+        android:id="@+id/TextViewregisteraccess"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="New user? Register now :)"
+        android:ems="10"
+        android:textStyle="bold"
+        android:inputType="textPersonName" />
 
 </RelativeLayout>

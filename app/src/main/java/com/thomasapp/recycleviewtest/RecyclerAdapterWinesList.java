@@ -1,11 +1,14 @@
 package com.thomasapp.recycleviewtest;
 
+import android.app.Activity;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -72,8 +75,11 @@ public class RecyclerAdapterWinesList extends RecyclerView.Adapter<RecyclerAdapt
             Commentaire = (TextView) view.findViewById(R.id.commentaire);
             Type = (TextView) view.findViewById(R.id.tvtousetype);
             Typeimage  = (ImageView) view.findViewById(R.id.imagetype);
+
         }
 
     }
+
+
 
 }

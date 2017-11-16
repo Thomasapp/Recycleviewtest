@@ -32,7 +32,7 @@ import static android.R.id.message;
  * Created by thomasdechaseaux on 24/10/2017.
  */
 
-public class ContactsRegister extends AppCompatActivity{
+public class ContactsRegister extends Activity{
 
     EditText ET_mail, ET_name;
     Button B_Register;

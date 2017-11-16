@@ -13,6 +13,7 @@ public class Wines {
     private String commentaire;
     public String type;
 
+
     public Wines (String chateaux, String cuvée, String commentaire, String type)
     {
         this.setChateaux(chateaux);
