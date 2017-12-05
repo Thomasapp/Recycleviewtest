@@ -1,6 +1,7 @@
 package com.thomasapp.recycleviewtest;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -35,11 +36,11 @@ public class AddContacts extends Activity {
     public void addcontactstobdd (View view){
         contacttoadd = ET_contacts.getText().toString();
 
-
-       // Toast.makeText(this,userwhoadd, Toast.LENGTH_SHORT).show();
         String method ="addcontactstobdd";
         BackgroundTaskContactsAdd backgroundTask = new BackgroundTaskContactsAdd (this);
         backgroundTask.execute(method,contacttoadd,userwhoadd);
         finish();
+        Intent i = new Intent(AddContacts.this, MainActivity.class);
+        startActivity(i);
     }
 }

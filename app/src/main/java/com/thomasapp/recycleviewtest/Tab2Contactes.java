@@ -5,7 +5,9 @@ package com.thomasapp.recycleviewtest;
  */
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -35,28 +37,42 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
+import static com.thomasapp.recycleviewtest.R.layout.contacts;
 
 public class Tab2Contactes extends Fragment {
 
-    TextView TV_backename, TV_backmail;
-    EditText name, mail;
     RecyclerView recyclerView;
+    AlertDialog.Builder builder;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.contacts, container, false);
-
+        View rootView = inflater.inflate(contacts, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_contacts_list);
         newsupdate();
+
+
+        //Toast.makeText(getActivity(), (CharSequence), Toast.LENGTH_LONG).show();
+        //SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE);
+        //final String users = sharedPreferences.getString("displayy","");
 
         Button T = (Button) rootView.findViewById(R.id.buttonlogintobdd);
         T.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), ContactsLogin.class);
-                startActivity(i);
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREF", MODE_PRIVATE);
+                final String username = sharedPreferences.getString("display","");
+                if(!username.equals("")){
+                    builder.setTitle("");
+                    builder.setMessage("You are already connected:)");
+                    displayAlertlogin();
+                }else {
+                    Intent i = new Intent(getActivity(), ContactsLogin.class);
+                    startActivity(i);
+                }
             }
         });
 
@@ -69,23 +85,24 @@ public class Tab2Contactes extends Fragment {
             }
         });
 
+        builder = new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme);
         Button buttonlogout = (Button) rootView.findViewById(R.id.buttonlogoutfrombdd);
         buttonlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREF", MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.clear();
-                editor.apply();
+                final String username = sharedPreferences.getString("display","");
+                if(!username.equals("")){
+                    builder.setTitle("");
+                    builder.setMessage("Are you sure you want to logout?");
+                    displayAlert();
+                }else {
+                    builder.setTitle("");
+                    builder.setMessage("You are not connected, no ways to logout;)");
+                    displayAlertlogin();
+                }
             }
         });
-
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREF", MODE_PRIVATE);
-        String display = sharedPreferences.getString("display","");
-        //TV_backename = (TextView) rootView.findViewById(R.id.tvgetbacknamefrombdd);
-        TV_backmail = (TextView) rootView.findViewById(R.id.tvgetbackmailfrombdd);
-        TV_backmail.setText(display);
-
         return rootView;
     }
 
@@ -93,15 +110,15 @@ public class Tab2Contactes extends Fragment {
         new Tab2Contactes.BackgroundTaskGetContacts(getActivity()).execute();
     }
 
-    public class BackgroundTaskGetContacts extends AsyncTask<Void, Contacts, Void> {
+    public class BackgroundTaskGetContacts extends AsyncTask<String, Contacts, String> {
 
         String json_string = "http://192.168.1.12/winesbdd/getcontactsfrombdd.php";
-
         Context ctx;
         Activity activity;
         RecyclerView.Adapter adapter;
         RecyclerView.LayoutManager layoutManager;
         ArrayList<Contacts> arrayList = new ArrayList<>();
+        ArrayList<String> listtest = new ArrayList<>();
 
         public BackgroundTaskGetContacts(Context ctx) {
             this.ctx = ctx;
@@ -119,7 +136,7 @@ public class Tab2Contactes extends Fragment {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected String doInBackground(String... params) {
             try {
                 URL url = new URL(json_string);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -131,21 +148,40 @@ public class Tab2Contactes extends Fragment {
                 while ((line = bufferedReader.readLine()) != null) {
                     stringBuilder.append(line).append("\n");
                 }
-
                 httpURLConnection.disconnect();
                 String json_string = stringBuilder.toString().trim();
-                JSONObject jsonObject = new JSONObject(json_string);
-                JSONArray jsonArray = jsonObject.getJSONArray("server_response");
-                int count = 0;
-                while (count < jsonArray.length()) {
-                    JSONObject JO = jsonArray.getJSONObject(count);
-                    count++;
+                final JSONObject jsonObject = new JSONObject(json_string);
+                final JSONArray jsonArray = jsonObject.getJSONArray("server_response");
+
+
+                //int count = 0;
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    final JSONObject JO = jsonArray.getJSONObject(i);
+                    //count++;
                     Contacts contacts = new Contacts(JO.getString("contacttoadd"));
+                    listtest.add(contacts.getUsermail());
                     publishProgress(contacts);
                 }
+
+                activity.runOnUiThread(new Runnable() {
+                    public void run() {
+
+                        String resultuserstofilter = listtest.toString();
+
+                        //Toast.makeText(getActivity(),listtest.toString(), Toast.LENGTH_LONG).show();
+                        SharedPreferences.Editor editor = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE).edit();
+                        editor.putString("displayy", resultuserstofilter);
+                        editor.apply();
+
+                        /*SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE);
+                        String users = sharedpreferences.getString(jsonArray.toString(), jsonArray.toString());
+                        SharedPreferences.Editor editor =sharedpreferences.edit();
+                        editor.putStringSet("displayy",users);
+                        editor.apply();*/
+                    }
+                });
+
                 Log.d("JSON STRING", json_string);
-
-
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -153,7 +189,6 @@ public class Tab2Contactes extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -164,10 +199,34 @@ public class Tab2Contactes extends Fragment {
         }
 
         @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
+        protected void onPostExecute(String result) {
+            //super.onPostExecute(result);
+            //Toast.makeText(getActivity(),, Toast.LENGTH_LONG).show();
         }
+    }
 
+    public void displayAlert() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREF", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.clear();
+                editor.apply();
+                //need app actualization
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+    public void displayAlertlogin() {
+        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
     }
 
 }

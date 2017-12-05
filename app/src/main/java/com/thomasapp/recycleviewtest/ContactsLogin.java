@@ -82,13 +82,13 @@ public class ContactsLogin extends Activity {
                                             displayAlert(jsonObject.getString("message"));
                                         } else {
                                             SharedPreferences sharedpreferences = getSharedPreferences("MYPREF", MODE_PRIVATE);
-
                                             String usermail =sharedpreferences.getString(mail, mail);
                                             SharedPreferences.Editor editor =sharedpreferences.edit();
                                             editor.putString("display",usermail);
                                             editor.apply();
-                                            Toast.makeText(ContactsLogin.this, usermail, Toast.LENGTH_LONG).show();
                                             finish();
+                                            Intent i = new Intent(ContactsLogin.this, MainActivity.class);
+                                            startActivity(i);
                                         }
 
                                     } catch (JSONException e) {

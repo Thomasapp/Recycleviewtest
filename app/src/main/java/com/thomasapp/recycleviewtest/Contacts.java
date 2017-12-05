@@ -1,5 +1,7 @@
 package com.thomasapp.recycleviewtest;
 
+import android.widget.Toast;
+
 /**
  * Created by thomasdechaseaux on 16/11/2017.
  */
@@ -20,5 +22,6 @@ public class Contacts {
     public void setUsermail(String usermail) {
         this.usermail = usermail;
     }
+
 
 }

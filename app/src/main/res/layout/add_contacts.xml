@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/finaledittexteaddcontacts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="contact"
+        android:hint="Friend mail"
         android:layout_gravity="center"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:layout_marginTop="80dp"/>
 
     <Button
         android:id="@+id/finalbuttonaddcontacts"
         android:layout_width="match_parent"
         android:onClick="addcontactstobdd"
         android:layout_height="wrap_content"
-        android:text="ADD" />
+        android:text="ADD"
+        android:layout_marginTop="10dp"/>
 </LinearLayout>

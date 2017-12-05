@@ -34,9 +34,9 @@ import static android.R.id.message;
 
 public class ContactsRegister extends Activity{
 
-    EditText ET_mail, ET_name;
+    EditText ET_mail, ET_name, ET_mailbis, ET_firstname;
     Button B_Register;
-    String mail, name;
+    String mail, mailbis, name, firstname;
     AlertDialog.Builder builder;
     String REGISTER_REQUEST_URL = "http://192.168.1.12/winesbdd/register.php";
 
@@ -46,7 +46,9 @@ public class ContactsRegister extends Activity{
         setContentView(R.layout.contacts_register);
 
         ET_mail = (EditText) findViewById(R.id.editTextmailregister);
+        ET_mailbis = (EditText) findViewById(R.id.editTextmailbisregister);
         ET_name = (EditText) findViewById(R.id.editTextpseudoregister);
+        ET_firstname = (EditText) findViewById(R.id.editTextpseudobisregister);
         B_Register = (Button) findViewById(R.id.buttonaddmailtobddregister);
         builder = new AlertDialog.Builder(ContactsRegister.this, R.style.MyDialogTheme);
 
@@ -55,13 +57,23 @@ public class ContactsRegister extends Activity{
             public void onClick(View v) {
 
                 mail = ET_mail.getText().toString();
+                mailbis = ET_mailbis.getText().toString();
                 name = ET_name.getText().toString();
+                firstname = ET_firstname.getText().toString();
 
-                if (name.equals("") || mail.equals("")) {
-                    builder.setTitle("SWW");
+                if (name.equals("") || mail.equals("")|| firstname.equals("")|| mailbis.equals("")) {
+                    builder.setTitle("SOMTHING IS MISSING :)");
                     builder.setMessage("Please fill all the fields");
                     displayAlert("input_error");
-                } else {
+                }
+
+                else if (!mail.equals(mailbis)) {
+                    builder.setTitle("SOMETHING IS MISSING :)");
+                    builder.setMessage("Your mails are not matching");
+                    displayAlert("input_error");
+                }
+
+                else{
                     StringRequest stringRequest = new StringRequest(Request.Method.POST, REGISTER_REQUEST_URL,
                             new Response.Listener<String>() {
 
@@ -79,13 +91,11 @@ public class ContactsRegister extends Activity{
                                     } catch (JSONException e) {
                                         e.printStackTrace();
                                     }
-
                                 }
                             }, new Response.ErrorListener() {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
                         }
                     }) {
                         @Override
@@ -93,6 +103,7 @@ public class ContactsRegister extends Activity{
                             Map<String, String> params = new HashMap<String, String>();
                             params.put("name", name);
                             params.put("mail", mail);
+                            params.put("firstname", firstname);
 
                             return params;
                         }
@@ -113,6 +124,8 @@ public class ContactsRegister extends Activity{
 
                     ET_name.setText("");
                     ET_mail.setText("");
+                    ET_mailbis.setText("");
+                    ET_firstname.setText("");
                 }
                 else if (code.equals("reg_success")){
                     finish();
@@ -120,6 +133,8 @@ public class ContactsRegister extends Activity{
                 else {
                     ET_name.setText("");
                     ET_mail.setText("");
+                    ET_mailbis.setText("");
+                    ET_firstname.setText("");
                 }
             }
         });

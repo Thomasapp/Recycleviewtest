@@ -53,9 +53,6 @@ public class BackgroundTaskContactsAdd extends AsyncTask<String, Void, String> {
                 return "Data added correctly..";
 
 
-            } catch (MalformedURLException e){
-                e.printStackTrace();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }

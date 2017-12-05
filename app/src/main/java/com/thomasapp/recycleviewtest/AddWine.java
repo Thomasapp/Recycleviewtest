@@ -2,11 +2,13 @@ package com.thomasapp.recycleviewtest;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -21,6 +23,7 @@ public class AddWine extends Activity {
     TextView TV_recap,USERMAIL;
     ImageButton IB_rouge, IB_blanc, IB_rose, IB_champagne, IB_spiritueux;
     String chateaux, cuvée, commentaire, type, usermail;
+    Button BT_addwine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +39,11 @@ public class AddWine extends Activity {
         IB_rose = (ImageButton) findViewById(R.id.imageButtonrose);
         IB_champagne = (ImageButton) findViewById(R.id.imageButtonchamp);
         IB_spiritueux = (ImageButton) findViewById(R.id.imageButtonspirit);
+        BT_addwine= (Button) findViewById(R.id.buttonaddwinetobdd);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("MYPREF", MODE_PRIVATE);
-        String display = sharedPreferences.getString("display","");
-        usermail = display;
-        Toast.makeText(this,display, Toast.LENGTH_SHORT).show();
+        SharedPreferences sharedPreferencess = getSharedPreferences("MYPREF", MODE_PRIVATE);
+        usermail = sharedPreferencess.getString("display","");
+        Toast.makeText(this,usermail, Toast.LENGTH_SHORT).show();
 
         IB_rouge.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,5 +114,7 @@ public class AddWine extends Activity {
         BackgroundTaskWinesList backgroundTask = new BackgroundTaskWinesList (this);
         backgroundTask.execute(method,chateaux,cuvée,commentaire,type,usermail);
         finish();
+        Intent i = new Intent(AddWine.this, MainActivity.class);
+        startActivity(i);
     }
 }

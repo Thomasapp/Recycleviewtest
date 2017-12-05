@@ -11,12 +11,12 @@
 
         <ImageView
             android:id="@+id/logosmall"
-            android:layout_width="51dp"
-            android:layout_height="45dp"
+            android:layout_width="47dp"
+            android:layout_height="36dp"
             android:contentDescription="imagerv"/>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="200dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -41,6 +41,8 @@
         </LinearLayout>
 
     </LinearLayout>
+
+
 
     <TextView
         android:id="@+id/tvtousetype"

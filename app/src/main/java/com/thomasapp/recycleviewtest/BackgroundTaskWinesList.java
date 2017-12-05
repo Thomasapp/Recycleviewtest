@@ -28,7 +28,6 @@ public class BackgroundTaskWinesList extends AsyncTask<String, Void, String>{
     protected void onPreExecute() {
         super.onPreExecute();
     }
-
     @Override
     protected String doInBackground(String... params) {
         String addwinetobdd_url = "http://192.168.1.12/winesbdd/addwine.php";
@@ -58,10 +57,6 @@ public class BackgroundTaskWinesList extends AsyncTask<String, Void, String>{
                 IS.close();
                 return "Data added correctly..";
 
-
-            } catch (MalformedURLException e){
-                e.printStackTrace();
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -77,6 +72,6 @@ public class BackgroundTaskWinesList extends AsyncTask<String, Void, String>{
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(ctx,result,Toast.LENGTH_LONG).show();
+        //Toast.makeText(ctx,result,Toast.LENGTH_LONG).show();
     }
 }

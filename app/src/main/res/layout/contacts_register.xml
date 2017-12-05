@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <EditText
         android:id="@+id/editTextmailregister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
-        android:hint="mail"
+        android:hint="Enter mail"
         android:gravity="center"
         android:layout_marginTop="80dp" />
+
+    <EditText
+        android:id="@+id/editTextmailbisregister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Enter mail again"
+        android:gravity="center"
+        android:layout_marginTop="10dp" />
 
     <EditText
         android:id="@+id/editTextpseudoregister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="name"
+        android:hint="Name"
         android:gravity="center"
-        android:layout_marginTop="120dp" />
+        android:layout_marginTop="10dp" />
+
+    <EditText
+        android:id="@+id/editTextpseudobisregister"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="First name"
+        android:gravity="center"
+        android:layout_marginTop="10dp" />
 
     <Button
         android:id="@+id/buttonaddmailtobddregister"
@@ -27,6 +46,6 @@
         android:layout_height="wrap_content"
         android:text="register"
         android:clickable="true"
-        android:layout_marginTop="160dp"/>
+        android:layout_marginTop="10dp"/>
 
-</RelativeLayout>
+</LinearLayout>
