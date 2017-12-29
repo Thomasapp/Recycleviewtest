@@ -30,12 +30,16 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -53,7 +57,6 @@ public class Tab2Contactes extends Fragment {
         View rootView = inflater.inflate(contacts, container, false);
         recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_contacts_list);
         newsupdate();
-
 
         //Toast.makeText(getActivity(), (CharSequence), Toast.LENGTH_LONG).show();
         //SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE);
@@ -96,6 +99,7 @@ public class Tab2Contactes extends Fragment {
                     builder.setTitle("");
                     builder.setMessage("Are you sure you want to logout?");
                     displayAlert();
+
                 }else {
                     builder.setTitle("");
                     builder.setMessage("You are not connected, no ways to logout;)");
@@ -137,9 +141,22 @@ public class Tab2Contactes extends Fragment {
 
         @Override
         protected String doInBackground(String... params) {
+
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREF", MODE_PRIVATE);
+            String usermail = sharedPreferences.getString("display","");
+
             try {
                 URL url = new URL(json_string);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoOutput(true);
+                OutputStream OS = httpURLConnection.getOutputStream();
+                BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+                String data = URLEncoder.encode("usermail","UTF-8") +"="+URLEncoder.encode(usermail,"UTF-8");//+"&"+URLEncoder.encode("usermails","UTF-8") +"="+URLEncoder.encode(usermails,"UTF-8");
+                bufferedWriter.write(data);
+                bufferedWriter.flush();
+                bufferedWriter.close();
+                OS.close();
                 InputStream IS = httpURLConnection.getInputStream();
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(IS));
                 StringBuilder stringBuilder = new StringBuilder();
@@ -153,40 +170,25 @@ public class Tab2Contactes extends Fragment {
                 final JSONObject jsonObject = new JSONObject(json_string);
                 final JSONArray jsonArray = jsonObject.getJSONArray("server_response");
 
-
-                //int count = 0;
                 for (int i = 0; i < jsonArray.length(); i++) {
                     final JSONObject JO = jsonArray.getJSONObject(i);
-                    //count++;
                     Contacts contacts = new Contacts(JO.getString("contacttoadd"));
-                    listtest.add(contacts.getUsermail());
+                    //listtest.add(contacts.getUsermail());
                     publishProgress(contacts);
                 }
 
-                activity.runOnUiThread(new Runnable() {
-                    public void run() {
+                //activity.runOnUiThread(new Runnable() {
+                    //public void run() {
 
-                        String resultuserstofilter = listtest.toString();
-
-                        //Toast.makeText(getActivity(),listtest.toString(), Toast.LENGTH_LONG).show();
-                        SharedPreferences.Editor editor = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE).edit();
-                        editor.putString("displayy", resultuserstofilter);
-                        editor.apply();
-
-                        /*SharedPreferences sharedpreferences = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE);
-                        String users = sharedpreferences.getString(jsonArray.toString(), jsonArray.toString());
-                        SharedPreferences.Editor editor =sharedpreferences.edit();
-                        editor.putStringSet("displayy",users);
-                        editor.apply();*/
-                    }
-                });
+                        //String resultuserstofilter = listtest.toString();
+                        //SharedPreferences.Editor editor = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE).edit();
+                        //editor.putString("displayy", resultuserstofilter);
+                        //editor.apply();
+                    //}
+                //});
 
                 Log.d("JSON STRING", json_string);
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
+            } catch (IOException | JSONException e) {
                 e.printStackTrace();
             }
             return null;
@@ -200,8 +202,6 @@ public class Tab2Contactes extends Fragment {
 
         @Override
         protected void onPostExecute(String result) {
-            //super.onPostExecute(result);
-            //Toast.makeText(getActivity(),, Toast.LENGTH_LONG).show();
         }
     }
 
@@ -213,7 +213,8 @@ public class Tab2Contactes extends Fragment {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.clear();
                 editor.apply();
-                //need app actualization
+                Intent i = new Intent(getActivity(), MainActivity.class);
+                startActivity(i);
             }
         });
         AlertDialog alertDialog = builder.create();

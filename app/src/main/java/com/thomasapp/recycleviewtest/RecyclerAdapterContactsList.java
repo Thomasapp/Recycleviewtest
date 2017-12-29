@@ -44,7 +44,7 @@ public class RecyclerAdapterContactsList extends RecyclerView.Adapter<RecyclerAd
         holder.usermail.setText(contacts.getUsermail());
 
         if (holder.usermail.getText().toString() != ("")) {
-            holder.imagelogo.setImageResource(R.drawable.logo);
+            holder.imagelogo.setImageResource(R.drawable.logoo);
             /*usersfromrecycler = holder.usermail.getText().toString();
             SharedPreferences sharedpreferences = context.getSharedPreferences("MYPREFFF", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedpreferences.edit();

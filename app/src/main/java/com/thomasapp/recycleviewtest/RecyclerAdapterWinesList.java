@@ -41,7 +41,7 @@ public class RecyclerAdapterWinesList extends RecyclerView.Adapter<RecyclerAdapt
         Wines wines =arrayList.get(position);
 
         holder.Chateaux.setText(wines.getChateaux());
-        holder.Cuvée.setText(wines.getCuvée());
+        //holder.Cuvée.setText(wines.getCuvée());
         holder.Commentaire.setText(wines.getCommentaire());
         holder.Type.setText(wines.getType());
 
@@ -64,14 +64,14 @@ public class RecyclerAdapterWinesList extends RecyclerView.Adapter<RecyclerAdapt
 
     public static class RecyclerViewHolder extends RecyclerView.ViewHolder
     {
-        TextView Chateaux,Cuvée,Commentaire,Type;
+        TextView Chateaux,Commentaire,Type;
         ImageView Typeimage;
 
         public RecyclerViewHolder (View view)
         {
             super(view);
             Chateaux = (TextView) view.findViewById(R.id.chateaux);
-            Cuvée = (TextView) view.findViewById(R.id.cuvée);
+            //Cuvée = (TextView) view.findViewById(R.id.cuvée);
             Commentaire = (TextView) view.findViewById(R.id.commentaire);
             Type = (TextView) view.findViewById(R.id.tvtousetype);
             Typeimage  = (ImageView) view.findViewById(R.id.imagetype);

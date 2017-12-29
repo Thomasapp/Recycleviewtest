@@ -35,10 +35,10 @@ public class BackgroundTaskWinesList extends AsyncTask<String, Void, String>{
         if (method.equals("addwinetobdd"))
         {
             String chateaux = params[1];
-            String cuvée = params[2];
-            String commentaire = params[3];
-            String type = params[4];
-            String usermail = params[5];
+            //String cuvée = params[2];
+            String commentaire = params[2];
+            String type = params[3];
+            String usermail = params[4];
             try {
                 URL url = new URL(addwinetobdd_url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
@@ -46,8 +46,7 @@ public class BackgroundTaskWinesList extends AsyncTask<String, Void, String>{
                 httpURLConnection.setDoOutput(true);
                 OutputStream OS = httpURLConnection.getOutputStream();
                 BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
-                String data = URLEncoder.encode("chateaux","UTF-8") +"="+URLEncoder.encode(chateaux,"UTF-8")+"&"+URLEncoder.encode("cuvée","UTF-8") +"="+URLEncoder.encode(cuvée,"UTF-8")
-                        +"&"+URLEncoder.encode("commentaire","UTF-8") +"="+URLEncoder.encode(commentaire,"UTF-8")+"&"+URLEncoder.encode("type","UTF-8") +"="+URLEncoder.encode(type,"UTF-8")
+                String data = URLEncoder.encode("chateaux","UTF-8") +"="+URLEncoder.encode(chateaux,"UTF-8")+"&"+URLEncoder.encode("commentaire","UTF-8") +"="+URLEncoder.encode(commentaire,"UTF-8")+"&"+URLEncoder.encode("type","UTF-8") +"="+URLEncoder.encode(type,"UTF-8")
                         +"&"+URLEncoder.encode("usermail","UTF-8") +"="+URLEncoder.encode(usermail,"UTF-8");
                 bufferedWriter.write(data);
                 bufferedWriter.flush();

@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/fondecranlogin"
+    android:background="@drawable/fondecranetiquette"
     android:orientation="vertical">
 
     <LinearLayout
@@ -57,7 +57,7 @@
         android:layout_gravity="center"
         android:textStyle="bold"
         android:layout_marginTop="5dp"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorblack"
         android:inputType="textPersonName" />
 
 </LinearLayout>

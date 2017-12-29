@@ -16,8 +16,8 @@
     <Button
         android:id="@+id/finalbuttonaddcontacts"
         android:layout_width="match_parent"
-        android:onClick="addcontactstobdd"
         android:layout_height="wrap_content"
         android:text="ADD"
+        android:clickable="true"
         android:layout_marginTop="10dp"/>
 </LinearLayout>

@@ -55,7 +55,6 @@ public class ContactsLogin extends Activity {
         BT_login = (Button) findViewById(R.id.buttoncheckmailtobddlogin);
         builder = new AlertDialog.Builder(ContactsLogin.this, R.style.MyDialogTheme);
 
-
         BT_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

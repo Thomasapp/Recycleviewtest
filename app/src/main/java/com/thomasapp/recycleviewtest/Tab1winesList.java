@@ -63,6 +63,16 @@ public class Tab1winesList extends Fragment {
         String username = sharedPreferences.getString("display","");
         builder = new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme);
 
+        ImageButton T = (ImageButton) rootView.findViewById(R.id.addanewwine);
+        T.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), AddWine.class);
+                startActivity(i);
+            }
+        });
+
             if (username.equals("")) {
                 builder.setTitle("Welcome to Wineforfriends;)");
                 builder.setMessage("First you need to login;)");
@@ -70,16 +80,6 @@ public class Tab1winesList extends Fragment {
             } else {
                 recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view_wines_list);
                 newsupdate();
-
-                ImageButton T = (ImageButton) rootView.findViewById(R.id.addanewwine);
-                T.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        Intent i = new Intent(getActivity(), AddWine.class);
-                        startActivity(i);
-                    }
-                });
             }
         return rootView;
     }
@@ -118,10 +118,6 @@ public class Tab1winesList extends Fragment {
 
             SharedPreferences sharedPreferences = getActivity().getSharedPreferences("MYPREF", MODE_PRIVATE);
             String usermail = sharedPreferences.getString("display","");
-            //SharedPreferences sharedPreferencess = getActivity().getSharedPreferences("MYPREFF", MODE_PRIVATE);
-            //String usermails = sharedPreferencess.getString("displayy","");
-
-            //usermail = params[0];
 
             try {
                 URL url = new URL(json_string);
@@ -152,7 +148,7 @@ public class Tab1winesList extends Fragment {
                 while (count < jsonArray.length()) {
                     JSONObject JO = jsonArray.getJSONObject(count);
                     count++;
-                    Wines wines = new Wines(JO.getString("chateaux"), JO.getString("cuvée"),JO.getString("commentaire"), JO.getString("type"));
+                    Wines wines = new Wines(JO.getString("chateaux"),JO.getString("commentaire"), JO.getString("type"));
                     publishProgress(wines);
                 }
                 Log.d("JSON STRING", json_string);
